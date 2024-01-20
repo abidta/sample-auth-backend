@@ -6,6 +6,7 @@ import {errorHandler,notFound} from './middlewares/errorMiddleware.js'
 import authRoutes from'./routes/authRoutes.js'
 import usersRoutes from './routes/userRoutes.js'
 import logger from 'morgan'
+import { verifyToken } from "./middlewares/authMiddleware.js";
 
 dotenv.config()
 connectDb()
@@ -25,7 +26,7 @@ app.use(logger('tiny'))
 
 
 app.use('/auth', authRoutes);
-app.use('/users', usersRoutes);
+app.use('/users',verifyToken, usersRoutes);
 
 //view engin setup
 // app.set('views', path.join(__dirname, 'views'));
